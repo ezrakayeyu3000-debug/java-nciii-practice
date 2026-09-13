@@ -1,7 +1,5 @@
 public class Practice {
-  public static void main (Strings [] args) {
-    System.out.printIn("Im learning Java NCIII!");
-  
- }
-
+    public static void main(String[] args) {
+        System.out.println("I'm learning Java NCIII!");
+    }
 }
