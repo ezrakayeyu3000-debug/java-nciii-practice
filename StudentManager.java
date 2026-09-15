@@ -1,5 +1,8 @@
+import java .io.*;
 import java.util.ArrayList;
-import java.util.List;
+import java .util.List;
+
+
 
 public class StudentManager {
     private List<Student> students;
@@ -11,13 +14,13 @@ public class StudentManager {
     // Add a student
     public void addStudent(Student student) {
         students.add(student);
-        System.out.println("✅ Student added successfully!");
+        System.out.println("Student added successfully!");
     }
 
     // View all students
     public void viewAllStudents() {
         if (students.isEmpty()) {
-            System.out.println("⚠️  No students found.");
+            System.out.println("No students found.");
             return;
         }
         System.out.println("\n===== STUDENT LIST =====");
@@ -65,7 +68,39 @@ public class StudentManager {
     }
 
     // Get total count
-    public int getStudentCount() {
+    public int getStudentCount() { 
         return students.size();
+    }
+        // Save students to file
+    public void saveToFile(String filename) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            for (Student s : students) {
+                writer.println(s.getStudentId() + "," + s.getName() + "," 
+                              + s.getAge() + "," + s.getCourse());
+            }
+            System.out.println("Data saved to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving: " + e.getMessage());
+        }
+    }
+
+    // Load students from file
+    public void loadFromFile(String filename) {
+        File file = new File(filename);
+        if (!file.exists()) {
+            return;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    students.add(new Student(parts[0], parts[1],
+                                             Integer.parseInt(parts[2]), parts[3]));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading: " + e.getMessage());
+        }
     }
 }

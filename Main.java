@@ -1,13 +1,17 @@
 import java.util.Scanner;
 
 public class Main {
-    private static StudentManager manager = new StudentManager();
+    private static final String FILE_NAME = "students.txt";       
     private static Scanner scanner = new Scanner(System.in);
-
+    private static StudentManager manager = new StudentManager();
+    
     public static void main(String[] args) {
         System.out.println("========================================");
         System.out.println("   STUDENT MANAGEMENT SYSTEM v1.0");
         System.out.println("========================================");
+
+        // Load saved students from file
+        manager.loadFromFile(FILE_NAME);
 
         boolean running = true;
 
@@ -32,6 +36,7 @@ public class Main {
                     deleteStudent();
                     break;
                 case 6:
+                    manager.saveToFile(FILE_NAME);
                     System.out.println("Goodbye!");
                     running = false;
                     break;
